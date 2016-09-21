@@ -40,6 +40,7 @@ defmodule Martha.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
 
+      {:comeonin, "~> 1.0"},
       {:timex, "~> 3.0.8"}
    ]
   end

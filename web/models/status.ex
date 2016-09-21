@@ -1,9 +1,12 @@
 defmodule Martha.Status do
   use Martha.Web, :model
 
+  alias Martha.Session
+
   schema "statuses" do
     field :type, :string
     field :description, :string
+    belongs_to :user, Martha.User
 
     timestamps()
   end
@@ -13,12 +16,15 @@ defmodule Martha.Status do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:type, :description])
-    |> validate_required([:type, :description])
+    |> cast(params, [:type, :description, :user_id])
+    |> validate_required([:type, :description, :user_id])
   end
 
-  def latest_statuses do
-    Ecto.Query.from(m in Martha.Status, order_by: [desc: m.inserted_at])
+  def latest_statuses(conn) do
+    user_id = Session.current_user(conn).id
+    Ecto.Query.from s in Martha.Status,
+                    order_by: [desc: s.inserted_at],
+                    where: [user_id: ^user_id]
   end
 
   def display_date(status) do
