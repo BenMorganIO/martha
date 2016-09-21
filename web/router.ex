@@ -16,6 +16,11 @@ defmodule Martha.Router do
   scope "/", Martha do
     pipe_through :browser
 
+    resources "/registrations", RegistrationController, only: [:create]
+
+    post   "/login",  SessionController, :create
+    delete "/logout", SessionController, :delete
+
     resources "/", StatusController, only: [:index, :create, :edit, :update, :delete]
   end
 end

@@ -52,6 +52,8 @@ defmodule Martha.Web do
       import Martha.Router.Helpers
       import Martha.ErrorHelpers
       import Martha.Gettext
+
+      import Martha.Session, only: [current_user: 1, logged_in?: 1]
     end
   end
 

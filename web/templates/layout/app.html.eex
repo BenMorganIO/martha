@@ -13,8 +13,22 @@
 
   <body>
     <div class="container">
-      <header class="header">
-        <h2> Martha </h2>
+      <header class="row">
+        <h2 class="col-xs-8"> Martha </h2>
+
+        <div class="col-xs-4">
+          <ul class="nav">
+            <%= if logged_in?(@conn) do %>
+              <li>
+                <a> <%= current_user(@conn).name %> | <%= current_user(@conn).phone_number %> </a>
+              </li>
+
+              <li>
+                <%= link "Logout", to: session_path(@conn, :delete), method: :delete %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
