@@ -1,0 +1,9 @@
+/* This file is for your main application css. */
+
+.meal {
+  border-right: solid 1px black;
+}
+
+.reflection {
+  border-left: solid 1px black;
+}

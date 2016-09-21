@@ -1,0 +1,43 @@
+<%= form_for @changeset, status_path(@conn, :create), [class: "form-inline row"], fn f -> %>
+  <div class="col-xs-3">
+    <%= text_input f, :type, class: "form-control", placeholder: "type" %>
+  </div>
+
+  <div class="col-xs-7 col-sm-8">
+    <%= text_input f, :description, class: "form-control", placeholder: "description", style: "width: 100%" %>
+  </div>
+
+  <div class="col-xs-2 col-sm-1">
+    <%= submit "Go", class: "btn btn-primary pull-right" %>
+  </div>
+<% end %>
+
+<section class="row text-center">
+  <h3 class="lead col-xs-6"> Meals </h3>
+  <h3 class="lead col-xs-6"> Reflections </h3>
+</section>
+
+<%= for status <- @statuses do %>
+  <section class="media row" id="<%= status.id %>">
+    <section class="<%= if Martha.Status.reflection?(status), do: "reflection pull-right", else: "meal" %> col-xs-6">
+      <p>
+        <%= if !Martha.Status.reflection? status do %>
+          <strong> <%= status.type %>: </strong>
+        <% end %>
+
+        <%= status.description %>
+      </p>
+
+      <div class="row">
+        <div class="col-xs-8">
+          <p> <small> <%= Martha.Status.display_date status %> </small> </p>
+        </div>
+
+        <div class="col-xs-4 text-right">
+          <%= link "Edit", to: status_path(@conn, :edit, status), class: "btn btn-link btn-xs" %>
+          <%= link "Delete", to: status_path(@conn, :delete, status), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-link btn-xs" %>
+        </div>
+      </div>
+    </section>
+  </section>
+<% end %>
